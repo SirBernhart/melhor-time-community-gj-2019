@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GridCrontroller : MonoBehaviour
 {
+    public enum TileState {Clear, Obstacle, Danger};
+
     [SerializeField] private int gridSize = 7;
     private Tile[][] grid; // 1st [] = line / 2nd [] = column
 
@@ -11,7 +13,7 @@ public class GridCrontroller : MonoBehaviour
     void Start()
     {
         grid = new Tile[gridSize][];
-        int test = 0;
+
         for(int i = 0 ; i < gridSize ; i++)
         {
             Transform currentLine = transform.GetChild(i);
