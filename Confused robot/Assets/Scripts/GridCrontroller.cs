@@ -48,6 +48,7 @@ public class GridCrontroller : MonoBehaviour
         {
             return entityPos;
         }
+        return Vector2.zero;
     }
 
     private bool CheckIfCanMove(Tile tile, int movX, int movY)
