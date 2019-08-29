@@ -14,19 +14,16 @@ public class GridCrontroller : MonoBehaviour
     {
         grid = new Tile[gridSize][];
 
-        for(int i = 0 ; i < gridSize ; i++) // Lines
+        for (int i = 0; i < gridSize; i++) // Lines
         {
             Transform currentLine = transform.GetChild(i);
             grid[i] = new Tile[7];
-            for(int j = 0 ; j < gridSize ; j++) // Columns
+            for (int j = 0; j < gridSize; j++) // Columns
             {
                 grid[i][j] = currentLine.GetChild(j).GetComponent<Tile>();
                 grid[i][j].position = new Vector2(i, j);
             }
         }
-        Debug.Log(grid[0][0].GetState());
-        Debug.Log(CheckIfCanMove(grid[0][0].position, -1f, false));
-
     }
 
     // Moves the entity found in the grid's passed entityPos position "tilesToMove" in the x (if moveInX == true), else in the y axis  
