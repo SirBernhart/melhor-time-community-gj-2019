@@ -29,42 +29,38 @@ public class GridCrontroller : MonoBehaviour
     // Moves the entity found in the grid's passed entityPos position "tilesToMove" in the x (if moveInX == true), else in the y axis  
     // Returns the entity's new position
     // ===> If the new position is negative, it means the player has died
-    public Vector2 MoveEntity (Vector2 entityPos, float tilesToMove, bool moveInX)
+    public Tile MoveEntity (Tile entityTile, float tilesToMove, bool moveInX)
     {
-        Tile currentTile = grid[(int)entityPos.x][(int)entityPos.y];
-        
-
-        if(CheckIfCanMove(entityPos, tilesToMove, moveInX))
+        if(CheckIfCanMove(entityTile.position, tilesToMove, moveInX))
         {
-            Tile newEntityTile = GetTileInNewPosition(entityPos, tilesToMove, moveInX);
+            Tile newEntityTile = GetTileInNewPosition(entityTile.position, tilesToMove, moveInX);
             if (newEntityTile == null)
             {
-                return entityPos;
+                return entityTile;
             }
             // Instances where the player dies
-            if (currentTile.GetState() == TileState.Enemy)
+            if (entityTile.GetState() == TileState.Enemy)
             {
                 if(newEntityTile.GetState() == TileState.Player)
                 {
-                    return new Vector2(-1, -1);
+                    return null;
                 }
             }
-            else if(currentTile.GetState() == TileState.Player)
+            else if(entityTile.GetState() == TileState.Player)
             {
                 if(newEntityTile.GetState() == TileState.Danger || newEntityTile.GetState() == TileState.Enemy) 
                 {
-                    return new Vector2(-1, -1);
+                    return null;
                 }
             }
 
             // If the player doesn't die with the move
-            newEntityTile.SetState(currentTile.GetState());
-            currentTile.SetState(TileState.Clear);
+            newEntityTile.SetState(entityTile.GetState());
+            entityTile.SetState(TileState.Clear);
 
-            return newEntityTile.position;
-
+            return newEntityTile;
         }
-        return entityPos;
+        return entityTile;
     }
 
     // Checks if the entity is capable of moving in the passed direction
