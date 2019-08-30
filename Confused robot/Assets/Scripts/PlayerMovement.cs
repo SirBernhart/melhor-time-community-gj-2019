@@ -23,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
         {
             HandleMovement(moveValue, true);
         }
+        
     }
 
     private void HandleMovement(float moveValue, bool moveInX)
@@ -42,13 +43,17 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+
     // Used to count the cooldown time
     IEnumerator MakeTransition(float maxTime, Tile newTile)
     {
         float currentTime = 0;
         while(currentTime < maxTime)
         {
-            transform.position = transform.position + transform.forward * moveSpeed * Time.deltaTime;
+            if(Vector3.Distance(currentTile.transform.position, transform.position) <= 1)
+            {
+                transform.position = transform.position + transform.forward * moveSpeed * Time.deltaTime;
+            }
             
             currentTime += Time.deltaTime;
             yield return null;
