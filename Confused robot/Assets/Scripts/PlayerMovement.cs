@@ -5,9 +5,11 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private GridCrontroller gridControllerScript;
+    [SerializeField] private Animator animator;
     [Tooltip("Ponha aqui o tile inicial")]
     [SerializeField] private Tile currentTile;
     [SerializeField] private float movementCooldown = 1.5f;
+    [SerializeField] private float moveSpeed = 1000;
     private bool canMove = true;
     
     void Update()
@@ -27,23 +29,34 @@ public class PlayerMovement : MonoBehaviour
     {
         if (canMove)
         {
-            currentTile = gridControllerScript.MoveEntity(currentTile, moveValue, moveInX);
-            transform.SetParent(currentTile.transform);
-            canMove = false;
-            StartCoroutine(Timer(movementCooldown));
+            Tile newTile = gridControllerScript.MoveEntity(currentTile, moveValue, moveInX);
+            
+            if (!newTile.gameObject.Equals(currentTile.gameObject))
+            {
+                animator.SetTrigger("Moved");
+                transform.LookAt(newTile.transform.position);
+            
+                canMove = false;
+                StartCoroutine(MakeTransition(movementCooldown, newTile));
+            }
         }
     }
 
     // Used to count the cooldown time
-    IEnumerator Timer(float maxTime)
+    IEnumerator MakeTransition(float maxTime, Tile newTile)
     {
         float currentTime = 0;
         while(currentTime < maxTime)
         {
+            transform.position = transform.position + transform.forward * moveSpeed * Time.deltaTime;
+            
             currentTime += Time.deltaTime;
             yield return null;
         }
-
+        transform.SetParent(newTile.transform);
+        currentTile = newTile;
+        transform.position.Set(0f, 0f, 0f);
         canMove = true;
+        Debug.Log(currentTile.position);
     }
 }

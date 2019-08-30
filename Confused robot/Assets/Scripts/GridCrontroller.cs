@@ -17,7 +17,7 @@ public class GridCrontroller : MonoBehaviour
         for (int i = 0; i < gridSize; i++) // Lines
         {
             Transform currentLine = transform.GetChild(i);
-            grid[i] = new Tile[7];
+            grid[i] = new Tile[gridSize];
             for (int j = 0; j < gridSize; j++) // Columns
             {
                 grid[i][j] = currentLine.GetChild(j).GetComponent<Tile>();
