@@ -5,14 +5,24 @@ using UnityEngine.UI;
 
 public class ControlsInfo : MonoBehaviour
 {
+    [Header("s,d,a,w")]
     public List<Image> UIImages;
 
     public List<Sprite> sprites;
+
+    public static ControlsInfo Instance {get; private set;}
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        if(Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
     }
     
     // Update is called once per frame
