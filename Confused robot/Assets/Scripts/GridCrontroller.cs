@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -52,6 +52,12 @@ public class GridCrontroller : MonoBehaviour
                 {
                     return null;
                 }
+            }
+
+            // The player reached the door
+            if(entityTile.GetState() == TileState.Door)
+            {
+                
             }
 
             // If the player doesn't die with the move
