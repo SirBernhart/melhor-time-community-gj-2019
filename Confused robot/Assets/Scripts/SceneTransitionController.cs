@@ -8,12 +8,12 @@ public class SceneTransitionController : MonoBehaviour
     // Fades fancily out of the scene
     public void FadeOutOfScene()
     {
-        sceneController.ReloadScene();
+        sceneController.LoadNextLevel();
     }
 
     // Fades fancily into the scene
     public void FadeIntoScene()
     {
-        sceneController.LoadNextLevel();
+        
     }
 }

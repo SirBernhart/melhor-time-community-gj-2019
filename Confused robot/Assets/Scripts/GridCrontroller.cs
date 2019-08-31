@@ -56,7 +56,7 @@ public class GridCrontroller : MonoBehaviour
             }
 
             // The player reached the door
-            if(entityTile.GetState() == TileState.Door)
+            if(newEntityTile.GetState() == TileState.Door)
             {
                 transitionController.FadeOutOfScene();
             }
