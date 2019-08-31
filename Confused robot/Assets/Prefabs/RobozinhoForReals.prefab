@@ -44,11 +44,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bebc42531077ad4e84a91433abf1c9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sceneController: {fileID: 0}
   gridControllerScript: {fileID: 0}
   animator: {fileID: 7110038687987586473}
   currentTile: {fileID: 0}
-  movementCooldown: 1
-  moveSpeed: 10
+  movementCooldown: 1.2
+  moveSpeed: 1.5
+  timeToStartMove: 0.3
 --- !u!1001 &3290360369397613808
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -126,26 +128,6 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: d0bb96010b83ebb4ba64ecf97f05e20a, type: 2}
-    - target: {fileID: 7691580990178896163, guid: e9e319f66b1490043b75ecc8eac23bd6,
-        type: 3}
-      propertyPath: gridControllerScript
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7691580990178896163, guid: e9e319f66b1490043b75ecc8eac23bd6,
-        type: 3}
-      propertyPath: currentTile
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7691580990178896163, guid: e9e319f66b1490043b75ecc8eac23bd6,
-        type: 3}
-      propertyPath: animator
-      value: 
-      objectReference: {fileID: 7110038687987586473}
-    - target: {fileID: 7691580990178896163, guid: e9e319f66b1490043b75ecc8eac23bd6,
-        type: 3}
-      propertyPath: moveSpeed
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 7161666865051964312, guid: e9e319f66b1490043b75ecc8eac23bd6,
         type: 3}
       propertyPath: m_LocalRotation.x
@@ -195,6 +177,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7691580990178896163, guid: e9e319f66b1490043b75ecc8eac23bd6,
+        type: 3}
+      propertyPath: gridControllerScript
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7691580990178896163, guid: e9e319f66b1490043b75ecc8eac23bd6,
+        type: 3}
+      propertyPath: currentTile
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7691580990178896163, guid: e9e319f66b1490043b75ecc8eac23bd6,
+        type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 7110038687987586473}
+    - target: {fileID: 7691580990178896163, guid: e9e319f66b1490043b75ecc8eac23bd6,
+        type: 3}
+      propertyPath: moveSpeed
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9e319f66b1490043b75ecc8eac23bd6, type: 3}
