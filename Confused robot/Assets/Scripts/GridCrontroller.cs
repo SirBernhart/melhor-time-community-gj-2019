@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GridCrontroller : MonoBehaviour
 {
-    public enum TileState {Clear, Obstacle, Danger, Enemy, Player};
+    public enum TileState {Clear, Obstacle, Danger, Enemy, Player, Button, Door};
 
     [SerializeField] private int gridSize = 7;
     private Tile[][] grid; // 1st [] = line / 2nd [] = column
