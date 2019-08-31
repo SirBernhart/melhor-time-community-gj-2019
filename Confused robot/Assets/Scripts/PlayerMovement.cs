@@ -28,9 +28,23 @@ public class PlayerMovement : MonoBehaviour
 
     private bool gameHasEnded;
 
+    //public GameObject losePanel;
+
     public void EndGame()
     {
         gameHasEnded = true;
+
+        //o painel a ser aberto quando você perdeu o jogo
+        //GameObject losePanel = GameObject.Find("LOSEPanel");
+        GameObject losePanel = GameObject.FindObjectOfType<Countdown>().losePanel;
+        if(losePanel != null)
+        {
+            losePanel.SetActive(true);
+        }
+        else
+        {
+            Debug.LogWarning("Cade o losepanel???");
+        }
     }
 
     // Checks if it's necessary to reduce the number of moves to jumble the keys
@@ -44,6 +58,8 @@ public class PlayerMovement : MonoBehaviour
         shuffledMovement = true;
 
         _countdown = GameObject.FindObjectOfType<Countdown>();
+
+        animator.SetBool("Died", false);
 
     }
 
@@ -138,6 +154,7 @@ public class PlayerMovement : MonoBehaviour
         {
             Tile newTile = gridControllerScript.MoveEntity(currentTile, moveValue, moveInX);
 
+            
             if (!newTile.gameObject.Equals(currentTile.gameObject))
             {
                 movesToJumbleKeys--;
@@ -146,6 +163,10 @@ public class PlayerMovement : MonoBehaviour
                 animator.SetTrigger("Moved");
             
                 StartCoroutine(MakeTransition(movementCooldown, newTile));
+                if((int)newTile.GetState() == 2 || (int) newTile.GetState() == 3) //enemy or danger
+                {
+                    animator.SetBool("Died", true);
+                }
             }
             else
             {
