@@ -26,6 +26,13 @@ public class PlayerMovement : MonoBehaviour
 
     private Countdown _countdown;
 
+    private bool gameHasEnded;
+
+    public void EndGame()
+    {
+        gameHasEnded = true;
+    }
+
     // Checks if it's necessary to reduce the number of moves to jumble the keys
     private void Start()
     {
@@ -43,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         float moveValue;
-        if(canMove)
+        if(canMove && !gameHasEnded)
         {
             if((moveValue = Input.GetAxisRaw("Horizontal")) != 0f)
             {

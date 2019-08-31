@@ -39,6 +39,11 @@ public class Countdown : MonoBehaviour
         {
             losePanel.SetActive(true);
         }
+        var pm = GameObject.FindObjectOfType<PlayerMovement>();
+        if(pm != null)
+        {
+            pm.EndGame();
+        }
 
     }
     
