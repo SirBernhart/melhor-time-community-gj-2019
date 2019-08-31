@@ -797,6 +797,11 @@ PrefabInstance:
       propertyPath: state
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6921987527783534964, guid: e276e39d3c317174db116e9dd37861ae,
+        type: 3}
+      propertyPath: state
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8046105531623834547, guid: e276e39d3c317174db116e9dd37861ae,
         type: 3}
       propertyPath: state
