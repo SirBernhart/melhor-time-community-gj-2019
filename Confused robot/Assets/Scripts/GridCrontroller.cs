@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class GridCrontroller : MonoBehaviour
 {
+    
     public enum TileState {Clear, Obstacle, Danger, Enemy, Player, Button, Door, Puddle};
 
     [SerializeField] private SceneTransitionController transitionController;
@@ -15,6 +18,8 @@ public class GridCrontroller : MonoBehaviour
     HashSet<Tile> pressedButtons;
 
     private Door _door;
+
+    private PlayerMovement _pm;
 
 
     // Initializes the grid
@@ -45,6 +50,8 @@ public class GridCrontroller : MonoBehaviour
         _door = GameObject.FindObjectOfType<Door>();
         SetDoorLights();
 
+        _pm = GameObject.FindObjectOfType<PlayerMovement>();
+
     }
 
     // Moves the entity found in the grid's passed entityPos position "tilesToMove" in the x (if moveInX == true), else in the y axis  
@@ -71,7 +78,8 @@ public class GridCrontroller : MonoBehaviour
             {
                 if(newEntityTile.GetState() == TileState.Danger || newEntityTile.GetState() == TileState.Enemy) 
                 {
-                    return null;
+                    _pm.EndGame();
+                    return newEntityTile;
                 }
             }
 

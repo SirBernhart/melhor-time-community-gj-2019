@@ -59,6 +59,8 @@ public class PlayerMovement : MonoBehaviour
 
         _countdown = GameObject.FindObjectOfType<Countdown>();
 
+        animator.SetBool("Died", false);
+
     }
 
     void Update()
@@ -152,6 +154,7 @@ public class PlayerMovement : MonoBehaviour
         {
             Tile newTile = gridControllerScript.MoveEntity(currentTile, moveValue, moveInX);
 
+            
             if (!newTile.gameObject.Equals(currentTile.gameObject))
             {
                 movesToJumbleKeys--;
@@ -160,6 +163,10 @@ public class PlayerMovement : MonoBehaviour
                 animator.SetTrigger("Moved");
             
                 StartCoroutine(MakeTransition(movementCooldown, newTile));
+                if((int)newTile.GetState() == 2 || (int) newTile.GetState() == 3) //enemy or danger
+                {
+                    animator.SetBool("Died", true);
+                }
             }
             else
             {
