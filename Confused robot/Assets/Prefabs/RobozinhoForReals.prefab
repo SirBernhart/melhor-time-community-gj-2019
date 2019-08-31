@@ -46,10 +46,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridControllerScript: {fileID: 0}
   animator: {fileID: 7110038687987586473}
-  currentTile: {fileID: 0}
   movementCooldown: 0.8
   moveSpeed: 2.5
   timeToStartMove: 0.2
+  difficultySO: {fileID: 11400000, guid: 9455fae4315849543a015f0f2b9e37d7, type: 2}
   shuffledMovement: 0
 --- !u!1001 &3290360369397613808
 PrefabInstance:
