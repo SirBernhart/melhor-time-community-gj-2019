@@ -14,7 +14,7 @@ public class JumbleKeysDifficulty : ScriptableObject
 
     public void ResetToBaseValue()
     {
-        if (SceneManager.GetActiveScene().name == "level1.1")
+        if (SceneManager.GetActiveScene().name == "Level 1")
         {
             currentMovesToJumble = baseMovesToJumble;
         }
