@@ -14,6 +14,8 @@ public class GridCrontroller : MonoBehaviour
     private int buttonsCount;
     HashSet<Tile> pressedButtons;
 
+    private Door _door;
+
 
     // Initializes the grid
     void Start()
@@ -40,6 +42,8 @@ public class GridCrontroller : MonoBehaviour
         pressedButtonsCount = 0; //0 button are pressed on scene start
         pressedButtons = new HashSet<Tile>();
         
+        _door = GameObject.FindObjectOfType<Door>();
+
     }
 
     // Moves the entity found in the grid's passed entityPos position "tilesToMove" in the x (if moveInX == true), else in the y axis  
@@ -81,12 +85,20 @@ public class GridCrontroller : MonoBehaviour
                     pressedButtonsCount++;
                     pressedButtons.Add(newEntityTile);
                 }
+                SetDoorLights();
+
             }
             // The player reached the door
             //if the player has already pressed all the needed buttons,
             if(newEntityTile.GetState() == TileState.Door && pressedButtonsCount >= buttonsCount)
             {
+                SetDoorLights();
                 transitionController.FadeOutOfScene();
+            }
+            else if(newEntityTile.GetState() == TileState.Door)
+            {
+                //if i entered the door, but am not allowed to access it, i still set the lights
+                SetDoorLights();
             }
 
             // If the player doesn't die with the move
@@ -96,6 +108,24 @@ public class GridCrontroller : MonoBehaviour
             return newEntityTile;
         }
         return entityTile;
+    }
+
+    private void SetDoorLights()
+    {
+        if(_door == null) return;
+
+        if(pressedButtonsCount == 0)
+        {
+            _door.SetLight(DoorAccess.Denied);
+        }
+        else if(pressedButtonsCount < buttonsCount)
+        {
+            _door.SetLight(DoorAccess.Intermediate);
+        }
+        else if(pressedButtonsCount >= buttonsCount)
+        {
+            _door.SetLight(DoorAccess.Allowed);
+        }
     }
 
     // Checks if the entity is capable of moving in the passed direction
