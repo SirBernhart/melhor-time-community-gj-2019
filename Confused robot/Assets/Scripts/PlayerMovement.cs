@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] private SceneController sceneController;
     [SerializeField] private GridCrontroller gridControllerScript;
     [SerializeField] private Animator animator;
     [Tooltip("Ponha aqui o tile inicial")]
     [SerializeField] private Tile currentTile;
     [SerializeField] private float movementCooldown = 1.5f;
-    [SerializeField] private float moveSpeed = 1000;
+    [SerializeField] private float moveSpeed = 1.5f;
+    [SerializeField] private float timeToStartMove;
     private bool canMove = true;
     
     void Update()
@@ -32,10 +34,17 @@ public class PlayerMovement : MonoBehaviour
         {
             Tile newTile = gridControllerScript.MoveEntity(currentTile, moveValue, moveInX);
             
+            // The player has died
+            if(newTile == null)
+            {
+                sceneController.ReloadScene();
+                return;
+            }
+
             if (!newTile.gameObject.Equals(currentTile.gameObject))
             {
-                animator.SetTrigger("Moved");
                 transform.LookAt(newTile.transform.position);
+                animator.SetTrigger("Moved");
             
                 canMove = false;
                 StartCoroutine(MakeTransition(movementCooldown, newTile));
@@ -50,7 +59,7 @@ public class PlayerMovement : MonoBehaviour
         float currentTime = 0;
         while(currentTime < maxTime)
         {
-            if(Vector3.Distance(currentTile.transform.position, transform.position) <= 1)
+            if(currentTime >= timeToStartMove && Vector3.Distance(currentTile.transform.position, transform.position) <= 1)
             {
                 transform.position = transform.position + transform.forward * moveSpeed * Time.deltaTime;
             }
@@ -61,6 +70,7 @@ public class PlayerMovement : MonoBehaviour
         transform.SetParent(newTile.transform);
         currentTile = newTile;
         transform.position.Set(0f, 0f, 0f);
+        Debug.Log(transform.position);
         canMove = true;
         Debug.Log(currentTile.position);
     }
