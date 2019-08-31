@@ -16,4 +16,9 @@ public class SceneTransitionController : MonoBehaviour
     {
         
     }
+
+    public void ResetScene()
+    {
+        sceneController.ReloadScene();
+    }
 }

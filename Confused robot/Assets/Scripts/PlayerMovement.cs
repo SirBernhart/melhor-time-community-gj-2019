@@ -24,6 +24,8 @@ public class PlayerMovement : MonoBehaviour
 
     public bool shuffledMovement  = false;
 
+    private Countdown _countdown;
+
     // Checks if it's necessary to reduce the number of moves to jumble the keys
     private void Start()
     {
@@ -32,6 +34,9 @@ public class PlayerMovement : MonoBehaviour
 
         currentTile = transform.parent.GetComponent<Tile>();
         shuffledMovement = true;
+
+        _countdown = GameObject.FindObjectOfType<Countdown>();
+
     }
 
     void Update()
@@ -42,11 +47,14 @@ public class PlayerMovement : MonoBehaviour
             if((moveValue = Input.GetAxisRaw("Horizontal")) != 0f)
             {
                 ButtonToMovement(moveValue, false);
+                _countdown.StartCountdown(); //começa countdown, só se não tiver começado já
             }
             else if((moveValue = Input.GetAxisRaw("Vertical")) != 0f)
             {
                 ButtonToMovement(moveValue, true);
+                _countdown.StartCountdown(); //começa countdown, só se não tiver começado já
             }
+
         }
         
     }
