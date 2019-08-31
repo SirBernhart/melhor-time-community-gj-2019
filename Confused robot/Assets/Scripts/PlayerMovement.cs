@@ -24,13 +24,16 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         float moveValue;
-        if((moveValue = Input.GetAxisRaw("Horizontal")) != 0f)
+        if(canMove)
         {
-            ButtonToMovement(moveValue, false);
-        }
-        else if((moveValue = Input.GetAxisRaw("Vertical")) != 0f)
-        {
-            ButtonToMovement(moveValue, true);
+            if((moveValue = Input.GetAxisRaw("Horizontal")) != 0f)
+            {
+                ButtonToMovement(moveValue, false);
+            }
+            else if((moveValue = Input.GetAxisRaw("Vertical")) != 0f)
+            {
+                ButtonToMovement(moveValue, true);
+            }
         }
         
     }
@@ -48,18 +51,22 @@ public class PlayerMovement : MonoBehaviour
         int index = 0;
         if(moveValue < 0.0f && moveInX)
         {
+            //s
             index = 0;    
         }
         else if(moveValue > 0.0f && !moveInX)
         {
+            //d
             index = 1;
         }
         else if(moveValue < 0.0f && !moveInX)
         {
+            //a
             index = 2;
         }
         else if(moveValue > 0.0f && moveInX)
         {
+            //w
             index = 3;
         }
         else
@@ -68,10 +75,10 @@ public class PlayerMovement : MonoBehaviour
         }
 
         Debug.Log(index);
+        Debug.Log(moveValues[shuffledDirections[index]].ToString() + boolValues[shuffledDirections[index]].ToString());
 
-        ShuffleList();
         HandleMovement(moveValues[shuffledDirections[index]], boolValues[shuffledDirections[index]]);
-        
+        ShuffleList();        
 
     }
 
@@ -126,5 +133,7 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log(transform.position);
         canMove = true;
         Debug.Log(currentTile.position);
+
+        ControlsInfo.Instance.UpdateDisplay(shuffledDirections);
     }
 }
