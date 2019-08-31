@@ -14,7 +14,6 @@ public class Countdown : MonoBehaviour
 
     private bool hasStarted;
 
-    //o painel a ser aberto quando você perdeu o jogo
     public GameObject losePanel;
 
     public void StartCountdown()
@@ -22,7 +21,7 @@ public class Countdown : MonoBehaviour
         if(!hasStarted)
         {
             hasStarted = true;
-            StartCoroutine("DoCountdown");
+            StartCoroutine(DoCountdown());
         }
     }
 
@@ -35,10 +34,7 @@ public class Countdown : MonoBehaviour
             elapsedTime += timeStep;
             _text.text = (CountdownTime - elapsedTime).ToString();
         }
-        if(losePanel != null)
-        {
-            losePanel.SetActive(true);
-        }
+        
         var pm = GameObject.FindObjectOfType<PlayerMovement>();
         if(pm != null)
         {
