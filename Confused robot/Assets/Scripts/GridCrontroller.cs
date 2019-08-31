@@ -10,10 +10,17 @@ public class GridCrontroller : MonoBehaviour
     [SerializeField] private int gridSize = 7;
     private Tile[][] grid; // 1st [] = line / 2nd [] = column
 
+    private int pressedButtonsCount;
+    private int buttonsCount;
+    HashSet<Tile> pressedButtons;
+
+
     // Initializes the grid
     void Start()
     {
         grid = new Tile[gridSize][];
+
+        buttonsCount = 0;
 
         for (int i = 0; i < gridSize; i++) // Lines
         {
@@ -23,8 +30,16 @@ public class GridCrontroller : MonoBehaviour
             {
                 grid[i][j] = currentLine.GetChild(j).GetComponent<Tile>();
                 grid[i][j].position = new Vector2(i, j);
+                if(grid[i][j].GetState() == TileState.Button)
+                {
+                    buttonsCount++;
+                }
             }
         }
+
+        pressedButtonsCount = 0; //0 button are pressed on scene start
+        pressedButtons = new HashSet<Tile>();
+        
     }
 
     // Moves the entity found in the grid's passed entityPos position "tilesToMove" in the x (if moveInX == true), else in the y axis  
@@ -55,8 +70,21 @@ public class GridCrontroller : MonoBehaviour
                 }
             }
 
+
+            //the player reached a button
+            if(newEntityTile.GetState() == TileState.Button)
+            {
+                //has the button *not* already been pressed?
+                if(!pressedButtons.Contains(newEntityTile))
+                {
+                    //we press a new button
+                    pressedButtonsCount++;
+                    pressedButtons.Add(newEntityTile);
+                }
+            }
             // The player reached the door
-            if(newEntityTile.GetState() == TileState.Door)
+            //if the player has already pressed all the needed buttons,
+            if(newEntityTile.GetState() == TileState.Door && pressedButtonsCount >= buttonsCount)
             {
                 transitionController.FadeOutOfScene();
             }
