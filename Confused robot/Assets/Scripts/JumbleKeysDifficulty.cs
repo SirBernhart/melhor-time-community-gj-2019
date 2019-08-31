@@ -10,6 +10,15 @@ public class JumbleKeysDifficulty : ScriptableObject
     public int movesToJumbleDecrese;
     public List<string> sceneNamesToUpDifficulty;
     public int currentMovesToJumble;
+    public int baseMovesToJumble;
+
+    public void ResetToBaseValue()
+    {
+        if (SceneManager.GetActiveScene().name == "level1.1")
+        {
+            currentMovesToJumble = baseMovesToJumble;
+        }
+    }
 
     public void DecreaseMovesToJumble()
     {
@@ -19,7 +28,10 @@ public class JumbleKeysDifficulty : ScriptableObject
         {
             if(currentSceneName == sceneNamesToUpDifficulty[i])
             {
-                currentMovesToJumble -= movesToJumbleDecrese;
+                if(currentMovesToJumble - movesToJumbleDecrese > 0)
+                {
+                    currentMovesToJumble -= movesToJumbleDecrese;
+                }
                 return;
             }
         }

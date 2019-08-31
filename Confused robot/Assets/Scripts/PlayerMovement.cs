@@ -29,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
     // Checks if it's necessary to reduce the number of moves to jumble the keys
     private void Start()
     {
+        difficultySO.ResetToBaseValue(); // Reseta o valor do currentMovesToJumble se estiver na primeira cena
         difficultySO.DecreaseMovesToJumble();
         movesToJumbleKeys = difficultySO.currentMovesToJumble;
 
@@ -100,10 +101,12 @@ public class PlayerMovement : MonoBehaviour
 
         HandleMovement(moveValues[shuffledDirections[index]], boolValues[shuffledDirections[index]]);
 
-        if (movesToJumbleKeys <= 0)
+        if (movesToJumbleKeys <= 1)
         {
             movesToJumbleKeys = difficultySO.currentMovesToJumble;
             ShuffleList();
+            ControlsInfo.Instance.UpdateDisplay(shuffledDirections);
+            // Play curto circuito
         }
 
     }
@@ -126,6 +129,9 @@ public class PlayerMovement : MonoBehaviour
         if (canMove)
         {
             Tile newTile = gridControllerScript.MoveEntity(currentTile, moveValue, moveInX);
+
+            movesToJumbleKeys--;
+            Debug.Log("Moves to jumble: " + movesToJumbleKeys);
 
             if (!newTile.gameObject.Equals(currentTile.gameObject))
             {
@@ -159,10 +165,5 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log(transform.position);
         canMove = true;
         Debug.Log(currentTile.position);
-
-        movesToJumbleKeys--;
-        Debug.Log("Moves to jumble: " + movesToJumbleKeys);        
-
-        ControlsInfo.Instance.UpdateDisplay(shuffledDirections);
     }
 }
