@@ -7,11 +7,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private GridCrontroller gridControllerScript;
     [SerializeField] private Animator animator;
     [Tooltip("Ponha aqui o tile inicial")]
-    [SerializeField] private Tile currentTile;
+    private Tile currentTile;
     [SerializeField] private float movementCooldown = 1.5f;
     [SerializeField] private float moveSpeed = 1.5f;
     [SerializeField] private float timeToStartMove;
     private bool canMove = true;
+    private int movesToJumbleKeys;
+    [SerializeField] private JumbleKeysDifficulty difficultySO;
+
 
     private List<int> shuffledDirections = new List<int>{0,1,2,3}; // s,d,a,w ???
 
@@ -21,19 +24,45 @@ public class PlayerMovement : MonoBehaviour
 
     public bool shuffledMovement  = false;
 
+    private Countdown _countdown;
+
+    private bool gameHasEnded;
+
+    public void EndGame()
+    {
+        gameHasEnded = true;
+    }
+
+    // Checks if it's necessary to reduce the number of moves to jumble the keys
+    private void Start()
+    {
+        difficultySO.ResetToBaseValue(); // Reseta o valor do currentMovesToJumble se estiver na primeira cena
+        difficultySO.DecreaseMovesToJumble();
+        movesToJumbleKeys = difficultySO.currentMovesToJumble;
+
+        currentTile = transform.parent.GetComponent<Tile>();
+        shuffledMovement = true;
+
+        _countdown = GameObject.FindObjectOfType<Countdown>();
+
+    }
+
     void Update()
     {
         float moveValue;
-        if(canMove)
+        if(canMove && !gameHasEnded)
         {
             if((moveValue = Input.GetAxisRaw("Horizontal")) != 0f)
             {
                 ButtonToMovement(moveValue, false);
+                _countdown.StartCountdown(); //começa countdown, só se não tiver começado já
             }
             else if((moveValue = Input.GetAxisRaw("Vertical")) != 0f)
             {
                 ButtonToMovement(moveValue, true);
+                _countdown.StartCountdown(); //começa countdown, só se não tiver começado já
             }
+
         }
         
     }
@@ -78,7 +107,14 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log(moveValues[shuffledDirections[index]].ToString() + boolValues[shuffledDirections[index]].ToString());
 
         HandleMovement(moveValues[shuffledDirections[index]], boolValues[shuffledDirections[index]]);
-        ShuffleList();        
+
+        if (movesToJumbleKeys <= 1)
+        {
+            movesToJumbleKeys = difficultySO.currentMovesToJumble;
+            ShuffleList();
+            ControlsInfo.Instance.UpdateDisplay(shuffledDirections);
+            // Play curto circuito
+        }
 
     }
 
@@ -103,21 +139,43 @@ public class PlayerMovement : MonoBehaviour
 
             if (!newTile.gameObject.Equals(currentTile.gameObject))
             {
+                movesToJumbleKeys--;
+                Debug.Log("Moves to jumble: " + movesToJumbleKeys);
                 transform.LookAt(newTile.transform.position);
                 animator.SetTrigger("Moved");
             
-                canMove = false;
                 StartCoroutine(MakeTransition(movementCooldown, newTile));
+            }
+            else
+            {
+                movesToJumbleKeys--;
+                Debug.Log("Moves to jumble: " + movesToJumbleKeys);
+                StartCoroutine(TimerCooldownCantMove(movementCooldown));
             }
         }
     }
 
+    // Used when the player can't move
+    IEnumerator TimerCooldownCantMove(float maxTime)
+    {
+        float currentTime = 0;
+
+        canMove = false;
+        while (currentTime < maxTime - 0.5)
+        {
+            currentTime += Time.deltaTime;
+            yield return null;
+        }
+        canMove = true;
+    }
 
     // Used to count the cooldown time
     IEnumerator MakeTransition(float maxTime, Tile newTile)
     {
         float currentTime = 0;
-        while(currentTime < maxTime)
+
+        canMove = false;
+        while (currentTime < maxTime)
         {
             if(currentTime >= timeToStartMove && Vector3.Distance(currentTile.transform.position, transform.position) <= 1)
             {
@@ -130,10 +188,6 @@ public class PlayerMovement : MonoBehaviour
         transform.SetParent(newTile.transform);
         currentTile = newTile;
         transform.position.Set(0f, 0f, 0f);
-        Debug.Log(transform.position);
         canMove = true;
-        Debug.Log(currentTile.position);
-
-        ControlsInfo.Instance.UpdateDisplay(shuffledDirections);
     }
 }
