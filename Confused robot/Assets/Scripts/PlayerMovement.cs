@@ -28,9 +28,23 @@ public class PlayerMovement : MonoBehaviour
 
     private bool gameHasEnded;
 
+    //public GameObject losePanel;
+
     public void EndGame()
     {
         gameHasEnded = true;
+
+        //o painel a ser aberto quando você perdeu o jogo
+        //GameObject losePanel = GameObject.Find("LOSEPanel");
+        GameObject losePanel = GameObject.FindObjectOfType<Countdown>().losePanel;
+        if(losePanel != null)
+        {
+            losePanel.SetActive(true);
+        }
+        else
+        {
+            Debug.LogWarning("Cade o losepanel???");
+        }
     }
 
     // Checks if it's necessary to reduce the number of moves to jumble the keys
