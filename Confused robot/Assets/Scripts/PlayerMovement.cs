@@ -7,11 +7,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private GridCrontroller gridControllerScript;
     [SerializeField] private Animator animator;
     [Tooltip("Ponha aqui o tile inicial")]
-    [SerializeField] private Tile currentTile;
+    private Tile currentTile;
     [SerializeField] private float movementCooldown = 1.5f;
     [SerializeField] private float moveSpeed = 1.5f;
     [SerializeField] private float timeToStartMove;
     private bool canMove = true;
+    private int movesToJumbleKeys;
+    [SerializeField] private JumbleKeysDifficulty difficultySO;
+
 
     private List<int> shuffledDirections = new List<int>{0,1,2,3}; // s,d,a,w ???
 
@@ -20,6 +23,16 @@ public class PlayerMovement : MonoBehaviour
     private bool[] boolValues = {true, false, false, true}; //s,d,a,w
 
     public bool shuffledMovement  = false;
+
+    // Checks if it's necessary to reduce the number of moves to jumble the keys
+    private void Start()
+    {
+        difficultySO.DecreaseMovesToJumble();
+        movesToJumbleKeys = difficultySO.currentMovesToJumble;
+
+        currentTile = transform.parent.GetComponent<Tile>();
+        shuffledMovement = true;
+    }
 
     void Update()
     {
@@ -78,7 +91,12 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log(moveValues[shuffledDirections[index]].ToString() + boolValues[shuffledDirections[index]].ToString());
 
         HandleMovement(moveValues[shuffledDirections[index]], boolValues[shuffledDirections[index]]);
-        ShuffleList();        
+
+        if (movesToJumbleKeys <= 0)
+        {
+            movesToJumbleKeys = difficultySO.currentMovesToJumble;
+            ShuffleList();
+        }
 
     }
 
@@ -133,6 +151,9 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log(transform.position);
         canMove = true;
         Debug.Log(currentTile.position);
+
+        movesToJumbleKeys--;
+        Debug.Log("Moves to jumble: " + movesToJumbleKeys);        
 
         ControlsInfo.Instance.UpdateDisplay(shuffledDirections);
     }
