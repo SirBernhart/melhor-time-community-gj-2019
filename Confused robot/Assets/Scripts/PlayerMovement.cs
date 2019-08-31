@@ -24,6 +24,15 @@ public class PlayerMovement : MonoBehaviour
 
     public bool shuffledMovement  = false;
 
+    private Countdown _countdown;
+
+    private bool gameHasEnded;
+
+    public void EndGame()
+    {
+        gameHasEnded = true;
+    }
+
     // Checks if it's necessary to reduce the number of moves to jumble the keys
     private void Start()
     {
@@ -33,21 +42,27 @@ public class PlayerMovement : MonoBehaviour
 
         currentTile = transform.parent.GetComponent<Tile>();
         shuffledMovement = true;
+
+        _countdown = GameObject.FindObjectOfType<Countdown>();
+
     }
 
     void Update()
     {
         float moveValue;
-        if(canMove)
+        if(canMove && !gameHasEnded)
         {
             if((moveValue = Input.GetAxisRaw("Horizontal")) != 0f)
             {
                 ButtonToMovement(moveValue, false);
+                _countdown.StartCountdown(); //começa countdown, só se não tiver começado já
             }
             else if((moveValue = Input.GetAxisRaw("Vertical")) != 0f)
             {
                 ButtonToMovement(moveValue, true);
+                _countdown.StartCountdown(); //começa countdown, só se não tiver começado já
             }
+
         }
         
     }
@@ -122,26 +137,45 @@ public class PlayerMovement : MonoBehaviour
         {
             Tile newTile = gridControllerScript.MoveEntity(currentTile, moveValue, moveInX);
 
-            movesToJumbleKeys--;
-            Debug.Log("Moves to jumble: " + movesToJumbleKeys);
-
             if (!newTile.gameObject.Equals(currentTile.gameObject))
             {
+                movesToJumbleKeys--;
+                Debug.Log("Moves to jumble: " + movesToJumbleKeys);
                 transform.LookAt(newTile.transform.position);
                 animator.SetTrigger("Moved");
             
-                canMove = false;
                 StartCoroutine(MakeTransition(movementCooldown, newTile));
+            }
+            else
+            {
+                movesToJumbleKeys--;
+                Debug.Log("Moves to jumble: " + movesToJumbleKeys);
+                StartCoroutine(TimerCooldownCantMove(movementCooldown));
             }
         }
     }
 
+    // Used when the player can't move
+    IEnumerator TimerCooldownCantMove(float maxTime)
+    {
+        float currentTime = 0;
+
+        canMove = false;
+        while (currentTime < maxTime - 0.5)
+        {
+            currentTime += Time.deltaTime;
+            yield return null;
+        }
+        canMove = true;
+    }
 
     // Used to count the cooldown time
     IEnumerator MakeTransition(float maxTime, Tile newTile)
     {
         float currentTime = 0;
-        while(currentTime < maxTime)
+
+        canMove = false;
+        while (currentTime < maxTime)
         {
             if(currentTime >= timeToStartMove && Vector3.Distance(currentTile.transform.position, transform.position) <= 1)
             {
@@ -154,8 +188,6 @@ public class PlayerMovement : MonoBehaviour
         transform.SetParent(newTile.transform);
         currentTile = newTile;
         transform.position.Set(0f, 0f, 0f);
-        Debug.Log(transform.position);
         canMove = true;
-        Debug.Log(currentTile.position);
     }
 }
