@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private SceneController sceneController;
     [SerializeField] private GridCrontroller gridControllerScript;
     [SerializeField] private Animator animator;
     [Tooltip("Ponha aqui o tile inicial")]
@@ -94,13 +93,6 @@ public class PlayerMovement : MonoBehaviour
         if (canMove)
         {
             Tile newTile = gridControllerScript.MoveEntity(currentTile, moveValue, moveInX);
-            
-            // The player has died
-            if(newTile == null)
-            {
-                sceneController.ReloadScene();
-                return;
-            }
 
             if (!newTile.gameObject.Equals(currentTile.gameObject))
             {
