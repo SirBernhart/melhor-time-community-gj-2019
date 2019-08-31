@@ -43,6 +43,7 @@ public class GridCrontroller : MonoBehaviour
         pressedButtons = new HashSet<Tile>();
         
         _door = GameObject.FindObjectOfType<Door>();
+        SetDoorLights();
 
     }
 
@@ -114,17 +115,18 @@ public class GridCrontroller : MonoBehaviour
     {
         if(_door == null) return;
 
-        if(pressedButtonsCount == 0)
+        
+        if(pressedButtonsCount >= buttonsCount)
+        {
+            _door.SetLight(DoorAccess.Allowed);
+        }
+        else if(pressedButtonsCount == 0)
         {
             _door.SetLight(DoorAccess.Denied);
         }
         else if(pressedButtonsCount < buttonsCount)
         {
             _door.SetLight(DoorAccess.Intermediate);
-        }
-        else if(pressedButtonsCount >= buttonsCount)
-        {
-            _door.SetLight(DoorAccess.Allowed);
         }
     }
 
