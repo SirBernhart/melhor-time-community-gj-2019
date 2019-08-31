@@ -44,13 +44,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bebc42531077ad4e84a91433abf1c9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneController: {fileID: 0}
   gridControllerScript: {fileID: 0}
   animator: {fileID: 7110038687987586473}
   currentTile: {fileID: 0}
   movementCooldown: 1.2
   moveSpeed: 1.5
   timeToStartMove: 0.3
+  difficultySO: {fileID: 11400000, guid: 9455fae4315849543a015f0f2b9e37d7, type: 2}
+  shuffledMovement: 0
 --- !u!1001 &3290360369397613808
 PrefabInstance:
   m_ObjectHideFlags: 0
