@@ -113,7 +113,8 @@ public class PlayerMovement : MonoBehaviour
             movesToJumbleKeys = difficultySO.currentMovesToJumble;
             ShuffleList();
             ControlsInfo.Instance.UpdateDisplay(shuffledDirections);
-            // Play curto circuito
+            // Play som curto circuito
+            animator.SetTrigger("Short Circuit");
         }
 
     }
