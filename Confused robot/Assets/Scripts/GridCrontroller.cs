@@ -6,6 +6,7 @@ public class GridCrontroller : MonoBehaviour
 {
     public enum TileState {Clear, Obstacle, Danger, Enemy, Player, Button, Door, Puddle};
 
+    [SerializeField] private SceneTransitionController transitionController;
     [SerializeField] private int gridSize = 7;
     private Tile[][] grid; // 1st [] = line / 2nd [] = column
 
@@ -55,9 +56,9 @@ public class GridCrontroller : MonoBehaviour
             }
 
             // The player reached the door
-            if(entityTile.GetState() == TileState.Door)
+            if(newEntityTile.GetState() == TileState.Door)
             {
-                
+                transitionController.FadeOutOfScene();
             }
 
             // If the player doesn't die with the move
