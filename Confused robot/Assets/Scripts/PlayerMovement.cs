@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     private bool canMove = true;
     private int movesToJumbleKeys;
     [SerializeField] private JumbleKeysDifficulty difficultySO;
+    public AudioManager am;
 
 
     private List<int> shuffledDirections = new List<int>{0,1,2,3}; // s,d,a,w ???
@@ -129,7 +130,7 @@ public class PlayerMovement : MonoBehaviour
             movesToJumbleKeys = difficultySO.currentMovesToJumble;
             ShuffleList();
             ControlsInfo.Instance.UpdateDisplay(shuffledDirections);
-            // Play som curto circuito
+            am.PlayShock();
             animator.SetTrigger("Short Circuit");
         }
 
@@ -161,6 +162,7 @@ public class PlayerMovement : MonoBehaviour
                 Debug.Log("Moves to jumble: " + movesToJumbleKeys);
                 transform.LookAt(newTile.transform.position);
                 animator.SetTrigger("Moved");
+                am.PlayPulo();
             
                 StartCoroutine(MakeTransition(movementCooldown, newTile));
                 if((int)newTile.GetState() == 2 || (int) newTile.GetState() == 3) //enemy or danger
