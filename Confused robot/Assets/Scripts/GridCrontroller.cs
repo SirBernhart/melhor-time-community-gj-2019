@@ -18,9 +18,9 @@ public class GridCrontroller : MonoBehaviour
     HashSet<Tile> pressedButtons;
 
     private Door _door;
-
+    public AudioSource doorUnlock;
+    public AudioSource buttonPress;
     private PlayerMovement _pm;
-
 
     // Initializes the grid
     void Start()
@@ -93,6 +93,8 @@ public class GridCrontroller : MonoBehaviour
                     //we press a new button
                     pressedButtonsCount++;
                     pressedButtons.Add(newEntityTile);
+                    buttonPress.Play();
+                    
                 }
                 SetDoorLights();
 
@@ -127,6 +129,7 @@ public class GridCrontroller : MonoBehaviour
         if(pressedButtonsCount >= buttonsCount)
         {
             _door.SetLight(DoorAccess.Allowed);
+            doorUnlock.Play();
         }
         else if(pressedButtonsCount == 0)
         {
