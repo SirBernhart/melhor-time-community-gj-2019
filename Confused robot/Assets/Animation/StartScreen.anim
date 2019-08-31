@@ -3138,7 +3138,7 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 2.85
+  - time: 16.1
     functionName: LoadNextLevel
     data: 
     objectReferenceParameter: {fileID: 0}
