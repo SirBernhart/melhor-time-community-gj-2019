@@ -122,26 +122,45 @@ public class PlayerMovement : MonoBehaviour
         {
             Tile newTile = gridControllerScript.MoveEntity(currentTile, moveValue, moveInX);
 
-            movesToJumbleKeys--;
-            Debug.Log("Moves to jumble: " + movesToJumbleKeys);
-
             if (!newTile.gameObject.Equals(currentTile.gameObject))
             {
+                movesToJumbleKeys--;
+                Debug.Log("Moves to jumble: " + movesToJumbleKeys);
                 transform.LookAt(newTile.transform.position);
                 animator.SetTrigger("Moved");
             
-                canMove = false;
                 StartCoroutine(MakeTransition(movementCooldown, newTile));
+            }
+            else
+            {
+                movesToJumbleKeys--;
+                Debug.Log("Moves to jumble: " + movesToJumbleKeys);
+                StartCoroutine(TimerCooldownCantMove(movementCooldown));
             }
         }
     }
 
+    // Used when the player can't move
+    IEnumerator TimerCooldownCantMove(float maxTime)
+    {
+        float currentTime = 0;
+
+        canMove = false;
+        while (currentTime < maxTime - 0.5)
+        {
+            currentTime += Time.deltaTime;
+            yield return null;
+        }
+        canMove = true;
+    }
 
     // Used to count the cooldown time
     IEnumerator MakeTransition(float maxTime, Tile newTile)
     {
         float currentTime = 0;
-        while(currentTime < maxTime)
+
+        canMove = false;
+        while (currentTime < maxTime)
         {
             if(currentTime >= timeToStartMove && Vector3.Distance(currentTile.transform.position, transform.position) <= 1)
             {
@@ -154,8 +173,6 @@ public class PlayerMovement : MonoBehaviour
         transform.SetParent(newTile.transform);
         currentTile = newTile;
         transform.position.Set(0f, 0f, 0f);
-        Debug.Log(transform.position);
         canMove = true;
-        Debug.Log(currentTile.position);
     }
 }
