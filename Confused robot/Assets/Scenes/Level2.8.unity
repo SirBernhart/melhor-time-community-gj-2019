@@ -515,7 +515,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 125.78, y: -30, z: 0}
 --- !u!1 &963194225
 GameObject:
@@ -1068,6 +1068,40 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b8019d89b2bde7146b6ede4ddb10b075, type: 3}
+--- !u!1001 &1851056344
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5467658573508084724, guid: 7f65df6d17e56af47822620c4522eb9d,
+        type: 3}
+      propertyPath: m_Name
+      value: Porta
+      objectReference: {fileID: 0}
+    - target: {fileID: 5467658573508084725, guid: 7f65df6d17e56af47822620c4522eb9d,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5467658573508084725, guid: 7f65df6d17e56af47822620c4522eb9d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5467658573508084725, guid: 7f65df6d17e56af47822620c4522eb9d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 270
+      objectReference: {fileID: 0}
+    - target: {fileID: 5467658573508084725, guid: 7f65df6d17e56af47822620c4522eb9d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7f65df6d17e56af47822620c4522eb9d, type: 3}
 --- !u!1 &1908128521
 GameObject:
   m_ObjectHideFlags: 0
