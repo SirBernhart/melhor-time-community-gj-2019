@@ -83,6 +83,8 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
+    public AudioSource pulo;
+    public AudioSource choque;
     //transforma o input do teclado para o movimento "embaralhado"
     private void ButtonToMovement(float moveValue, bool moveInX)
     {
@@ -129,7 +131,8 @@ public class PlayerMovement : MonoBehaviour
             movesToJumbleKeys = difficultySO.currentMovesToJumble;
             ShuffleList();
             ControlsInfo.Instance.UpdateDisplay(shuffledDirections);
-            // Play som curto circuito
+
+            choque.Play();
             animator.SetTrigger("Short Circuit");
         }
 
@@ -160,6 +163,9 @@ public class PlayerMovement : MonoBehaviour
                 movesToJumbleKeys--;
                 Debug.Log("Moves to jumble: " + movesToJumbleKeys);
                 transform.LookAt(newTile.transform.position);
+
+                pulo.pitch = Random.Range(0.55f, 1.25f);
+                pulo.Play();
                 animator.SetTrigger("Moved");
             
                 StartCoroutine(MakeTransition(movementCooldown, newTile));
