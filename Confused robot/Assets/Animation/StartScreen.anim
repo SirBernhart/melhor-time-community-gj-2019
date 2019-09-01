@@ -707,7 +707,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 271.40125
+        value: 246.4527
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -716,7 +716,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 3.0166667
-        value: 271.40125
+        value: 246.4527
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -725,7 +725,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 3.0333333
-        value: -1409
+        value: -1433.9485
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -733,8 +733,8 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 16.1
-        value: 1227
+        time: 23.4
+        value: 1202.0515
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -1448,7 +1448,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 16.116667
+    m_StopTime: 23.4
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -2394,7 +2394,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 271.40125
+        value: 246.4527
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -2403,7 +2403,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 3.0166667
-        value: 271.40125
+        value: 246.4527
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -2412,7 +2412,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 3.0333333
-        value: -1409
+        value: -1433.9485
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -2420,8 +2420,8 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 16.1
-        value: 1227
+        time: 23.4
+        value: 1202.0515
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -3138,7 +3138,7 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 16.1
+  - time: 23.4
     functionName: LoadNextLevel
     data: 
     objectReferenceParameter: {fileID: 0}
