@@ -18,5 +18,5 @@ MonoBehaviour:
   - level1.3
   - level2.1
   - level2.4
-  currentMovesToJumble: 2
+  currentMovesToJumble: 10
   baseMovesToJumble: 10

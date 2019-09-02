@@ -54,6 +54,7 @@ public class GridCrontroller : MonoBehaviour
 
     }
 
+    Tile lastTile;
     // Moves the entity found in the grid's passed entityPos position "tilesToMove" in the x (if moveInX == true), else in the y axis  
     // Returns the entity's new position
     // ===> If the new position is negative, it means the player has died
@@ -62,27 +63,17 @@ public class GridCrontroller : MonoBehaviour
         if(CheckIfCanMove(entityTile.position, tilesToMove, moveInX))
         {
             Tile newEntityTile = GetTileInNewPosition(entityTile.position, tilesToMove, moveInX);
+            
             if (newEntityTile == null)
             {
                 return entityTile;
             }
             // Instances where the player dies
-            if (entityTile.GetState() == TileState.Enemy)
+            if(newEntityTile.GetState() == TileState.Danger || newEntityTile.GetState() == TileState.Enemy) 
             {
-                if(newEntityTile.GetState() == TileState.Player)
-                {
-                    return null;
-                }
+                _pm.EndGame();
+                return newEntityTile;
             }
-            else if(entityTile.GetState() == TileState.Player)
-            {
-                if(newEntityTile.GetState() == TileState.Danger || newEntityTile.GetState() == TileState.Enemy) 
-                {
-                    _pm.EndGame();
-                    return newEntityTile;
-                }
-            }
-
 
             //the player reached a button
             if(newEntityTile.GetState() == TileState.Button)
@@ -99,6 +90,11 @@ public class GridCrontroller : MonoBehaviour
                 SetDoorLights();
 
             }
+            if(newEntityTile.GetState() == TileState.Puddle)
+            {
+                _pm.ShuffleControls();
+            }
+
             // The player reached the door
             //if the player has already pressed all the needed buttons,
             if(newEntityTile.GetState() == TileState.Door && pressedButtonsCount >= buttonsCount)
@@ -113,8 +109,9 @@ public class GridCrontroller : MonoBehaviour
             }
 
             // If the player doesn't die with the move
-            newEntityTile.SetState(entityTile.GetState());
-            entityTile.SetState(TileState.Clear);
+            Debug.Log(newEntityTile.GetState());
+            /*entityTile.SetState(newEntityTile.GetState());
+            newEntityTile.SetState(TileState.Player);*/
 
             return newEntityTile;
         }

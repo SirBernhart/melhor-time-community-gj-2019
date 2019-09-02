@@ -128,14 +128,22 @@ public class PlayerMovement : MonoBehaviour
 
         if (movesToJumbleKeys <= 1)
         {
-            movesToJumbleKeys = difficultySO.currentMovesToJumble;
-            ShuffleList();
-            ControlsInfo.Instance.UpdateDisplay(shuffledDirections);
-
-            choque.Play();
-            animator.SetTrigger("Short Circuit");
+            ShuffleControls();
         }
 
+    }
+
+    public void ShuffleControls()
+    {
+        movesToJumbleKeys = difficultySO.currentMovesToJumble;
+        ShuffleList();
+        ControlsInfo.Instance.UpdateDisplay(shuffledDirections);
+        Invoke("PlayChoqueSFX", 0.5f);
+        animator.SetTrigger("Short Circuit");
+    }
+    private void PlayChoqueSFX()
+    {
+        choque.Play();
     }
 
     private void ShuffleList()
@@ -156,11 +164,11 @@ public class PlayerMovement : MonoBehaviour
         if (canMove)
         {
             Tile newTile = gridControllerScript.MoveEntity(currentTile, moveValue, moveInX);
-
             
             if (!newTile.gameObject.Equals(currentTile.gameObject))
             {
                 movesToJumbleKeys--;
+
                 Debug.Log("Moves to jumble: " + movesToJumbleKeys);
                 transform.LookAt(newTile.transform.position);
 
