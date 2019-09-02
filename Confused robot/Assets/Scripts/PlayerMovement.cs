@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -51,7 +52,11 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         difficultySO.ResetToBaseValue(); // Reseta o valor do currentMovesToJumble se estiver na primeira cena
-        difficultySO.DecreaseMovesToJumble();
+        if(difficultySO.lastSceneName != SceneManager.GetActiveScene().name)
+        {
+            difficultySO.DecreaseMovesToJumble();
+            difficultySO.lastSceneName = SceneManager.GetActiveScene().name;
+        }
         movesToJumbleKeys = difficultySO.currentMovesToJumble;
 
         currentTile = transform.parent.GetComponent<Tile>();

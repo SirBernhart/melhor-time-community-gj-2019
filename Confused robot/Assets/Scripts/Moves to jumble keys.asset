@@ -20,3 +20,4 @@ MonoBehaviour:
   - level2.4
   currentMovesToJumble: 10
   baseMovesToJumble: 10
+  lastSceneName: level2.2

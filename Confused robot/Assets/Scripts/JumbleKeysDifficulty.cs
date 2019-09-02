@@ -11,6 +11,7 @@ public class JumbleKeysDifficulty : ScriptableObject
     public List<string> sceneNamesToUpDifficulty;
     public int currentMovesToJumble;
     public int baseMovesToJumble;
+    public string lastSceneName = SceneManager.GetActiveScene().name;
 
     public void ResetToBaseValue()
     {
@@ -24,7 +25,7 @@ public class JumbleKeysDifficulty : ScriptableObject
     {
         string currentSceneName = SceneManager.GetActiveScene().name;
 
-        for(int i = 0 ; i < sceneNamesToUpDifficulty.Count ; i++)
+        for (int i = 0 ; i < sceneNamesToUpDifficulty.Count ; i++)
         {
             if(currentSceneName == sceneNamesToUpDifficulty[i])
             {

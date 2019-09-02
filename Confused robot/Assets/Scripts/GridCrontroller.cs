@@ -108,11 +108,6 @@ public class GridCrontroller : MonoBehaviour
                 SetDoorLights();
             }
 
-            // If the player doesn't die with the move
-            Debug.Log(newEntityTile.GetState());
-            /*entityTile.SetState(newEntityTile.GetState());
-            newEntityTile.SetState(TileState.Player);*/
-
             return newEntityTile;
         }
         return entityTile;
